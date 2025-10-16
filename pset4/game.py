@@ -1,36 +1,46 @@
-"""
-In a file called game.py, implement a program that:
-Prompts the user for a level,n. If the user does not input a positive integer, the program should prompt again.
-Randomly generates an integer between 1 and n, inclusive, using the random module.
-Prompts the user to guess that integer. If the guess is not a positive integer, the program should prompt the user again.
-If the guess is smaller than that integer, the program should output Too small! and prompt the user again.
-If the guess is larger than that integer, the program should output Too large! and prompt the user again.
-If the guess is the same as that integer, the program should output Just right! and exit.
-"""
+# imports
 import random
 import sys
+
+# while loop
 while True:
+    # try block
     try:
+        # level
         n = int(input("Level: "))
         break
+    # except value error
     except ValueError:
+        # reprompt
         continue
 
+# randomly generates num between 1 and n
 num = random.randint(1,n)
+
+# while loop
 while True:
+    # try block
     try:
+        # input
         g = int(input("Guess: "))
+
+        # if guess is negative reprompt
         if g <= 0:
             continue
+        # if guess is too big reprompt
         if g > num:
             print("Too large!")
             continue
+        # if guess is too small reprompt
         elif g < num:
             print("Too small!")
             continue
+        # if guess is correct
         elif g == num:
             print("Just right!")
+            # exit
             sys.exit()
+    # except value error reprompt
     except ValueError:
         continue
 

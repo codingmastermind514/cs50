@@ -1,51 +1,62 @@
-"""
-
-https://cs50.harvard.edu/python/psets/4/professor/
-
-In a file called professor.py, implement a program that:
-
-    DONE: Prompts the user for a level. If the user does not input 1, 2, or 3, the program should prompt again.
-
-
-    DONE: Randomly generates ten (10) math problems formatted as X + Y = , wherein each of X and Y is a non-negative integer with digits. No need to support operations other than addition (+).
-
-
-    TO DO: Prompts the user to solve each of those problems. If an answer is not correct (or not even a number), the program should output EEE and prompt the user again, allowing the user up to three tries in total for that problem. If the user has still not answered correctly after three tries, the program should output the correct answer.
-
-
-    TO DO: The program should ultimately output the user’s score: the number of correct answers out of 10.
-
-Structure your program as follows, wherein get_level prompts (and, if need be, re-prompts) the user for a level and returns 1, 2, or 3, and generate_integer returns a single randomly generated non-negative integer with level digits or raises a ValueError if level is not 1, 2, or 3:
-
-Docs:
-docs.python.org/3/library/random.html
-
-"""
-
+# import random module
 import random
 
+# main function
 def main():
+    # call get_level
     lvl = get_level()
-
+    score = 0
+    # generate int
     for i in range(10):
         x = generate_integer(lvl)
         y = generate_integer(lvl)
 
-        operation = int(input(f"{x} + {y} = "))
+        # track tries, repeat until 3 tries, when 3 tries, display answer ; ALSO we want to show how many they got right total
+        tries = 0
+        while tries < 3:
+            try:
+                # question
+                operation = int(input(f"{x} + {y} = "))
 
-        if operation != x + y:
-            print("EEE")
+                # if wrong ans
+                if operation != x + y:
+                    print("EEE")
+                    tries += 1
+
+                # if right ans...
+                if operation == x + y:
+                    score += 1
+                    break
+
+            except BaseException:
+                print("EEE")
+                tries += 1
+                continue
+
+        # if they've done 3 tries, print the correct answer as x + y = ans
+        if tries == 3:
+            print(f"{x} + {y} = {x+y}")
+
+    # display the final score as Score: _
+    print(f"Score: {score}")
 
 # prompts (re-prompts) an integer 1, 2, 3 and returns it
 def get_level():
+    # while loop
     while True:
+        # try block
         try:
+            # input for level (stripped)
             level = int(input('Level: ').strip())
+        # except value error
         except ValueError:
             pass
+        # else
         else:
+            # invalid level
             if level not in [1,2,3]:
                 pass
+            # else return level
             else:
                 return level
 
